@@ -1,15 +1,23 @@
 public class Order {
 
-    private int quantity;
-    private int cycle_of_arrival = new Main().getCycle() + 2;
-    public Station receiver;
-    public Station sender;
+    private static int quantity;
+    private static int cycle_of_arrival = new Main().getCycle() + 2;
+    public static Station receiver;
+    public static Station sender;
 
     public Order(int quantity, Station receiver, Station sender) {
         this.quantity = quantity;
         this.receiver = receiver;
         this.sender = sender;
         new Main().orders.add(this);
+    }
+
+    public static void print() {
+        System.out.println("-----Order-----");
+        System.out.println(sender.type + " -> " + receiver.type);
+        System.out.println("Quantity: " + quantity);
+        System.out.println("ETA: " + cycle_of_arrival);
+        System.out.println("---------------");
     }
 
     public int getQuantity() {

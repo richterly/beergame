@@ -17,7 +17,7 @@ public class Main {
         for (int i = 0; i < orders.size(); i++) {
             if (orders.get(i).getCycle_of_arrival() == getCycle()) {
                 orders.get(i).processOrder();
-                System.out.println("Order " + orders.get(i).getQuantity() + " " + orders.get(i).getReceiver() + " " + orders.get(i).getCycle_of_arrival());
+                orders.get(i).print();
                 orders.remove(i);
             }
         }
@@ -27,7 +27,7 @@ public class Main {
         for (int i = 0; i < shipments.size(); i++) {
             if (shipments.get(i).getCycle_of_arrival() == getCycle()) {
                 shipments.get(i).processShipment();
-                System.out.println("Shipment " + shipments.get(i).getQuantity() + " " + shipments.get(i).getReceiver());
+                shipments.get(i).print();
                 shipments.remove(i);
             }
         }
@@ -61,7 +61,7 @@ public class Main {
 
             System.out.println("\n    Cycle " + cycle);
 
-            int demand = getDemand("random", 3);
+            int demand = getDemand("linear", 3);
 
             processShipments();
             processOrders();

@@ -1,13 +1,21 @@
 public class Shipment {
 
-    private int quantity;
-    private int cycle_of_arrival = new Main().getCycle() + 2;
-    private Station receiver;
+    private static int quantity;
+    private static int cycle_of_arrival = new Main().getCycle() + 2;
+    private static Station receiver;
 
     public Shipment(int quantity, Station receiver) {
         this.quantity = quantity;
         this.receiver = receiver;
         new Main().shipments.add(this);
+    }
+
+    public static void print() {
+        System.out.println("-----Shipment-----");
+        System.out.println("-> " + receiver.type);
+        System.out.println("Quantity: " + quantity);
+        System.out.println("ETA: " + cycle_of_arrival);
+        System.out.println("---------------");
     }
 
     public int getQuantity() {
