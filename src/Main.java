@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
     private static int cycle = 1;
     public static ArrayList<Order> orders = new ArrayList<Order>();
     public static ArrayList<Shipment> shipments = new ArrayList<Shipment>();
+
+    private static Scanner in = new Scanner(System.in);
 
     public static int getCycle() {
         return cycle;
@@ -32,13 +35,12 @@ public class Main {
 
     public static int getDemand(String d, int n) {
         int r = 0;
-        switch (d) {
-            case "random":
-                r = (int) (Math.random() * 19 + 1);
-            case "linear":
-                r = n;
-            case "curve":
-                r = (int) (2.5 * Math.cos(2.0 * Math.PI / 20.0 * (cycle)) + 7.5);
+        if (d.equals("random")) {
+            r = (int) (Math.random() * 20);
+        } else if (d.equals("linear")) {
+            r = n;
+        } else if (d.equals("curve")) {
+            r = (int) (2.5 * Math.cos(2.0 * Math.PI / 20.0 * (cycle)) + 7.5);
         }
         return r;
     }
@@ -64,14 +66,10 @@ public class Main {
             processShipments();
             processOrders();
 
-            System.out.println("Retailer IL " + retailer.getInventory_level());
-            System.out.println("Wholesaler IL " + wholesaler.getInventory_level());
-            System.out.println("Distributor IL " + distributor.getInventory_level());
-            System.out.println("Manufacturer IL " + manufacturer.getInventory_level());
-
             retailer.inventory_level -= demand;
 
-            retailer.placeOrder(demand, wholesaler);
+            System.out.println("Demand: " + demand + "\nWhat amount do you want to order?");
+            retailer.placeOrder(in.nextInt(), wholesaler);
             for (int i = 0; i < orders.size(); i++) {
                 if (orders.get(i).getCycle_of_arrival() == cycle) {
                     if (orders.get(i).receiver.type.equals("wholesaler")) {
@@ -89,21 +87,26 @@ public class Main {
             distributor.calculateCost();
             manufacturer.calculateCost();
 
-            System.out.println("Retailer holding cost " + retailer.getHolding_cost());
-            System.out.println("Retailer stockout cost " + retailer.getStockout_cost());
-
-            System.out.println("Wholesaler holding cost " + wholesaler.getHolding_cost());
-            System.out.println("Wholesaler stockout cost " + wholesaler.getStockout_cost());
-
-            System.out.println("Distributor holding cost " + distributor.getHolding_cost());
-            System.out.println("Distributor stockout cost " + distributor.getStockout_cost());
-
-            System.out.println("Manufacturer holding cost " + manufacturer.getHolding_cost());
-            System.out.println("Manufacturer stockout cost " + manufacturer.getStockout_cost());
-
             cycle++;
 
         }
+
+        System.out.println("Retailer IL " + retailer.getInventory_level());
+        System.out.println("Wholesaler IL " + wholesaler.getInventory_level());
+        System.out.println("Distributor IL " + distributor.getInventory_level());
+        System.out.println("Manufacturer IL " + manufacturer.getInventory_level());
+
+        System.out.println("Retailer holding cost " + retailer.getHolding_cost());
+        System.out.println("Retailer stockout cost " + retailer.getStockout_cost());
+
+        System.out.println("Wholesaler holding cost " + wholesaler.getHolding_cost());
+        System.out.println("Wholesaler stockout cost " + wholesaler.getStockout_cost());
+
+        System.out.println("Distributor holding cost " + distributor.getHolding_cost());
+        System.out.println("Distributor stockout cost " + distributor.getStockout_cost());
+
+        System.out.println("Manufacturer holding cost " + manufacturer.getHolding_cost());
+        System.out.println("Manufacturer stockout cost " + manufacturer.getStockout_cost());
 
     }
 
