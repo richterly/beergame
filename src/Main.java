@@ -70,16 +70,13 @@ public class Main {
 
             int demand = getDemand("linear", 3);
 
-            processShipments();
             processOrders();
+            processShipments();
 
             retailer.inventory_level -= demand;
 
             System.out.println("Demand: " + demand + "\nWhat amount do you want to order?");
             retailer.placeOrder(in.nextInt(), wholesaler);
-
-            processShipments();
-            processOrders();
 
             retailer.calculateCost();
             wholesaler.calculateCost();
