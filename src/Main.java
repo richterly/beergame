@@ -18,6 +18,13 @@ public class Main {
             if (orders.get(i).getCycle_of_arrival() == getCycle()) {
                 orders.get(i).processOrder();
                 orders.get(i).print();
+                if (orders.get(i).receiver.type.equals("wholesaler")) {
+                    wholesaler.placeOrder(orders.get(i).getQuantity(), distributor);
+                } else if (orders.get(i).receiver.type.equals("distributor")) {
+                    distributor.placeOrder(orders.get(i).getQuantity(), manufacturer);
+                } else if (orders.get(i).receiver.type.equals("manufacturer")) {
+                    manufacturer.manufacture(orders.get(i).getQuantity());
+                }
                 orders.remove(i);
             }
         }
@@ -70,17 +77,9 @@ public class Main {
 
             System.out.println("Demand: " + demand + "\nWhat amount do you want to order?");
             retailer.placeOrder(in.nextInt(), wholesaler);
-            for (int i = 0; i < orders.size(); i++) {
-                if (orders.get(i).getCycle_of_arrival() == cycle) {
-                    if (orders.get(i).receiver.type.equals("wholesaler")) {
-                        wholesaler.placeOrder(orders.get(i).getQuantity(), distributor);
-                    } else if (orders.get(i).receiver.type.equals("distributor")) {
-                        distributor.placeOrder(orders.get(i).getQuantity(), manufacturer);
-                    } else if (orders.get(i).receiver.type.equals("manufacturer")) {
-                        manufacturer.manufacture(orders.get(i).getQuantity());
-                    }
-                }
-            }
+
+            processShipments();
+            processOrders();
 
             retailer.calculateCost();
             wholesaler.calculateCost();
