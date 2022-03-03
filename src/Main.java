@@ -68,7 +68,7 @@ public class Main {
 
             System.out.println("\n    Cycle " + cycle);
 
-            int demand = getDemand("linear", 3);
+            int demand = getDemand("random", 3);
 
             processOrders();
             processShipments();
