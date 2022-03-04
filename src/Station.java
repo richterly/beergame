@@ -21,25 +21,20 @@ public class Station {
         return holding_cost;
     }
 
-    public void setHolding_cost(double holding_cost) {
-        this.holding_cost = holding_cost;
-    }
-
     public double getStockout_cost() {
         return stockout_cost;
     }
 
-    public void setStockout_cost(double stockout_cost) {
-        this.stockout_cost = stockout_cost;
+    public void manufacture(int demand, int cycle) {
+        Shipment shipment = new Shipment(demand, this, cycle);
+        System.out.println("Manufacture Shipment created:");
+        shipment.print();
     }
 
-    public void manufacture(int demand) {
-        Shipment shipment = new Shipment(demand, this);
-        Main.shipments.add(shipment);
-    }
-
-    public void placeOrder(int quantity, Station receiver) {
-        Order order = new Order(quantity, receiver, this);
+    public void placeOrder(int quantity, Station receiver, int cycle) {
+        Order order = new Order(quantity, receiver, this, cycle);
+        System.out.println("Order created:");
+        order.print();
     }
 
     public void calculateCost() {

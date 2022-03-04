@@ -1,12 +1,13 @@
 public class Shipment {
 
     private static int quantity;
-    private static int cycle_of_arrival = new Main().getCycle() + 2;
+    private static int cycle_of_arrival;
     private static Station receiver;
 
-    public Shipment(int quantity, Station receiver) {
+    public Shipment(int quantity, Station receiver, int cycle_of_arrival) {
         this.quantity = quantity;
         this.receiver = receiver;
+        this.cycle_of_arrival = cycle_of_arrival + 2;
         new Main().shipments.add(this);
     }
 
@@ -24,10 +25,6 @@ public class Shipment {
 
     public int getCycle_of_arrival() {
         return cycle_of_arrival;
-    }
-
-    public Station getReceiver() {
-        return receiver;
     }
 
     public void processShipment() {

@@ -1,14 +1,15 @@
 public class Order {
 
     private static int quantity;
-    private static int cycle_of_arrival = new Main().getCycle() + 2;
+    public static int cycle_of_arrival;
     public static Station receiver;
     public static Station sender;
 
-    public Order(int quantity, Station receiver, Station sender) {
+    public Order(int quantity, Station receiver, Station sender, int cycle_of_arrival) {
         this.quantity = quantity;
         this.receiver = receiver;
         this.sender = sender;
+        this.cycle_of_arrival = cycle_of_arrival + 2;
         new Main().orders.add(this);
     }
 
@@ -28,10 +29,6 @@ public class Order {
         return cycle_of_arrival;
     }
 
-    public Station getReceiver() {
-        return receiver;
-    }
-
     public void processOrder() {
         int q;
         if (this.quantity > this.receiver.getInventory_level() && this.receiver.getInventory_level() > 0) {
@@ -43,8 +40,10 @@ public class Order {
         } else {
             q = this.quantity;
         }
-        Shipment shipment =  new Shipment(q, this.sender);
+        Shipment shipment =  new Shipment(q, this.sender, cycle_of_arrival);
         new Main().shipments.add(shipment);
+        System.out.println("Shipment created:");
+        shipment.print();
     }
 
 }
